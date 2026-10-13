@@ -2,8 +2,8 @@
 // L'URL et la clé "anon" sont publiques par conception : la sécurité vient des règles SQL (supabase.sql).
 // Ne mettez JAMAIS ici une clé "secret" ou "service_role".
 ;(function (root) {
-  const SUPABASE_URL = 'https://dtzxudrchjsqaagmwoum.supabase.co'
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR0enh1ZHJjaGpzcWFhZ213b3VtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzOTc2MzIsImV4cCI6MjEwNjk3MzYzMn0.J9w9uUNUYr2UP1sX11G7yaMQVjVBDMUev-Q1m3er9ww'
+  const SUPABASE_URL = 'https://pdnjrtprfkixanfmjyky.supabase.co'
+  const SUPABASE_KEY = 'sb_publishable_0luFoN6Ssd_eIe9mM1Diqg_DXnqqqlo'
 
   const Cloud = {
     sb: null,
