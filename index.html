@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L'Architecte - jeu de plans</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <button class="brand" id="goHome" title="Retour aux niveaux">
+    <svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M3 15 15 4l12 11" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 13v12h16V13" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M13 25v-7h4v7" fill="none" stroke="currentColor" stroke-width="2.4"/></svg>
+    <span>L'Architecte</span>
+  </button>
+  <span class="top-sub" id="topSub">Corrige les plans, contente les clients</span>
+  <span class="grow"></span>
+  <span class="total" id="totalStars"></span>
+  <button class="hbtn on" id="bSnd" title="Bruitages">Sons</button>
+  <button class="hbtn on" id="bMus" title="Musique douce">Musique</button>
+  <button class="hbtn" id="bAcc" title="Compte et sauvegarde en ligne">Compte</button>
+</header>
+
+<main id="home" class="screen">
+  <section class="hero" id="hero"></section>
+  <div id="levels"></div>
+</main>
+
+<main id="game" class="screen hidden" data-tab="plan">
+  <nav class="tabs" id="tabs">
+    <button data-t="client">Client</button>
+    <button data-t="plan" class="on">Plan 2D</button>
+    <button data-t="view">Vue 3D</button>
+  </nav>
+
+  <aside class="panel client" id="clientPanel"></aside>
+
+  <section class="panel plan">
+    <div class="toolbar">
+      <button id="bUndo" class="btn">Annuler</button>
+      <button id="bReset" class="btn">Recommencer</button>
+      <button id="bHint" class="btn">Indice</button>
+      <span class="grow"></span>
+      <select id="addType" aria-label="Type de pièce à ajouter"></select>
+      <button id="bAdd" class="btn">Ajouter une pièce</button>
+    </div>
+    <div class="floors hidden" id="floors"></div>
+    <div class="palette hidden" id="palette">
+      <span class="tl">Meubles et jardin :</span>
+      <select id="itemSel" aria-label="Meuble, escalier ou élément de jardin à ajouter"></select>
+      <button id="bAddItem" class="btn">Ajouter</button>
+    </div>
+    <div class="tools" id="tools">
+      <span class="tl">Outil :</span>
+      <button class="tool on" data-tool="move" title="Déplacer les pièces. Un clic sur un mur : fenêtre, puis porte, puis rien">Déplacer</button>
+      <button class="tool" data-tool="window" title="Clique sur un mur extérieur pour poser une fenêtre">Fenêtre</button>
+      <button class="tool" data-tool="door" title="Clique sur un mur pour poser une porte (intérieur ou entrée)">Porte</button>
+      <button class="tool" data-tool="erase" title="Clique sur une fenêtre ou une porte pour l'enlever">Gomme</button>
+    </div>
+    <div class="planwrap"><svg id="svg" aria-label="Plan 2D"></svg></div>
+    <p class="toolmsg" id="toolMsg"></p>
+    <p class="help">Outil <b>Déplacer</b> : glisse une pièce, ou clique sur un mur pour essayer fenêtre, puis porte, puis rien. Avec les outils <b>Fenêtre</b>, <b>Porte</b> et <b>Gomme</b>, chaque clic sur un mur fait exactement ce que dit l'outil. Le nord est en haut, le soleil vient du sud.</p>
+    <div id="roomPanel" class="roompanel"></div>
+  </section>
+
+  <section class="panel view">
+    <div class="view-tools">
+      <b>Vue 3D</b>
+      <span class="grow"></span>
+      <label class="check hidden" id="upperWrap"><input type="checkbox" id="upperToggle"> Cacher l'étage</label>
+      <label class="check"><input type="checkbox" id="timeToggle"> Soirée</label>
+      <label class="check"><input type="checkbox" id="roofToggle"> Voir avec le toit</label>
+      <button class="btn" id="bView">Recentrer</button>
+    </div>
+    <div id="three" class="three"></div>
+    <p class="help">Glisse pour tourner autour de la maison, molette ou pincement pour zoomer.</p>
+  </section>
+</main>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="lib/three.min.js"></script>
+<script src="sounds.js"></script>
+<script src="cloud.js"></script>
+<script src="engine.js"></script>
+<script src="portraits.js"></script>
+<script src="levels-extra-a.js"></script>
+<script src="levels-extra-b.js"></script>
+<script src="levels-extra-c.js"></script>
+<script src="levels.js"></script>
+<script src="generator.js"></script>
+<script src="view3d.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
