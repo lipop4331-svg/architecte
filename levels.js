@@ -673,6 +673,7 @@
     { title: 'Les grands défis', from: 11, to: 16 },
     { title: 'Projets originaux', from: 17, to: 20 },
     { title: 'Maître architecte', from: 21, to: 26 },
+    { title: 'Légendes', from: 27, to: 30 },
   ]
   LEVELS.forEach((lv) => {
     const look = LOOKS[lv.id]
