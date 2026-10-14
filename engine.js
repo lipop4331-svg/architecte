@@ -32,12 +32,17 @@
     wc: { label: 'WC', w: 1, h: 1, cat: 'Salle de bain', rooms: ['sdb', 'couloir'], price: 0.3, color: '#eef0f2' },
     voiture: { label: 'Voiture', w: 2, h: 3, cat: 'Garage', rooms: ['garage'], price: 0, color: '#d4493e' },
     escalier: { label: 'Escalier', w: 1, h: 3, cat: 'Escalier', stairs: true, price: 2.0, color: '#d8c3a0' },
+    // Escalier en colimaçon : plus petit au sol (2 x 2) mais plus cher ; compte comme un escalier pour les critères
+    escalier_col: { label: 'Escalier en colimaçon', w: 2, h: 2, cat: 'Escalier', stairs: true, price: 2.8, color: '#d8c3a0' },
     terrasse: { label: 'Terrasse', w: 3, h: 2, cat: 'Jardin', garden: true, price: 1.5, color: '#d9b98a' },
     piscine: { label: 'Piscine', w: 3, h: 4, cat: 'Jardin', garden: true, price: 6, color: '#6bc3ec' },
     arbre: { label: 'Arbre', w: 2, h: 2, cat: 'Jardin', garden: true, price: 0.3, color: '#5aa84f' },
     rampe: { label: 'Rampe d’accès', w: 3, h: 1, cat: 'Accès', garden: true, price: 0.8, color: '#cdbf9f' },
     potager: { label: 'Potager', w: 2, h: 2, cat: 'Jardin', garden: true, price: 0.2, color: '#a97c50' },
   }
+
+  // Un critère « escalier » accepte aussi l'escalier en colimaçon
+  const isKind = (it, kind) => it.t === kind || (kind === 'escalier' && !!ITEMS[it.t]?.stairs)
 
   const DIRS = { N: [0, -1], S: [0, 1], W: [-1, 0], E: [1, 0] }
   const SIDE_NAME = { N: 'nord', S: 'sud', W: 'ouest', E: 'est' }
@@ -308,12 +313,12 @@
         return [rooms.length > 0 && badOnes === 0, badOnes ? 'il faut traverser une chambre' : 'aucune chambre à traverser']
       }
       case 'furn': {
-        const n = items.filter((it, i) => it.t === c.item && a.itemInfo[i].ok && a.itemInfo[i].room >= 0 && (!c.room || rooms[a.itemInfo[i].room].type === c.room) && (c.f === undefined || (it.f || 0) === c.f)).length
+        const n = items.filter((it, i) => isKind(it, c.item) && a.itemInfo[i].ok && a.itemInfo[i].room >= 0 && (!c.room || rooms[a.itemInfo[i].room].type === c.room) && (c.f === undefined || (it.f || 0) === c.f)).length
         return [n >= (c.min ?? 1) && (c.max === undefined || n <= c.max), `${n} ${lbl(c.item)}${c.room ? ' en ' + lbl(c.room) : ''}`]
       }
       case 'furnRoom': {
         const list = ofType(rooms, c.room)
-        const missing = list.filter(([, i]) => !items.some((it, k) => it.t === c.item && a.itemInfo[k].ok && (a.itemInfo[k].room === i || a.itemInfo[k].room1 === i))).length
+        const missing = list.filter(([, i]) => !items.some((it, k) => isKind(it, c.item) && a.itemInfo[k].ok && (a.itemInfo[k].room === i || a.itemInfo[k].room1 === i))).length
         return [list.length > 0 && missing === 0, list.length ? (missing ? `${missing} ${lbl(c.room)}(s) sans ${lbl(c.item)}` : 'toutes équipées') : `pas de ${lbl(c.room)}`]
       }
       case 'garden': {
