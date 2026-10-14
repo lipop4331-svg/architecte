@@ -641,6 +641,19 @@
           const off = -len / 2 + (len / n) * (i + 0.5)
           b(along === 'x' ? len / n : wid * 0.94, hh2, along === 'x' ? wid * 0.94 : len / n, along === 'x' ? off : 0, hh2 / 2, along === 'x' ? 0 : off, i % 2 ? 0xd8c3a0 : 0xe0cdac)
         }
+      } else if (k === 'escalier_col') {
+        // Marches en éventail autour d'un poteau central : chaque marche monte d'un cran en tournant
+        const n = 14, R = Math.min(w, h) / 2 * 0.94
+        this.cyl(grp, 0.09, 0.09, FLOOR_H, 0, FLOOR_H / 2, 0, 0xb59a6b, 12)
+        for (let i = 0; i < n; i++) {
+          const hh2 = ((i + 1) * FLOOR_H) / n
+          const ang = (i / n) * Math.PI * 2 * 0.95
+          const step = new THREE.Mesh(new THREE.CylinderGeometry(R, R, 0.06, 4, 1, false, 0, (Math.PI * 2) / n * 1.04), this.mat(i % 2 ? 0xd8c3a0 : 0xe0cdac))
+          step.position.set(0, hh2 - 0.03, 0)
+          step.rotation.y = -ang
+          step.castShadow = true; step.receiveShadow = true
+          grp.add(step)
+        }
       } else if (k === 'rampe') {
         const L = Math.max(w, h), Wd = Math.min(w, h), rise = 0.4
         const ramp = new THREE.Group()
