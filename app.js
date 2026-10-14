@@ -519,6 +519,13 @@
       s += long ? `<path d="M8 ${dh / 2}H${dw - 12}m-7 -6l7 6l-7 6" fill="none" stroke="#7a5a2a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>` : `<path d="M${dw / 2} ${dh - 8}V12m-6 7l6 -7l6 7" fill="none" stroke="#7a5a2a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`
       return s
     }
+    if (k === 'escalier_col') {
+      const cx = dw / 2, cy = dh / 2, R = Math.min(dw, dh) / 2 - 3
+      let s = `<rect x="1" y="1" width="${dw - 2}" height="${dh - 2}" rx="3" fill="#efe6d3" ${st}/><circle cx="${cx}" cy="${cy}" r="${R}" fill="${d.color}" ${st}/>`
+      for (let i = 0; i < 12; i++) { const a = (i * Math.PI) / 6; s += `<line x1="${cx + Math.cos(a) * 6}" y1="${cy + Math.sin(a) * 6}" x2="${cx + Math.cos(a) * R}" y2="${cy + Math.sin(a) * R}" stroke="#a88e62" stroke-width="1.6"/>` }
+      s += `<circle cx="${cx}" cy="${cy}" r="5.5" fill="#7a5a2a" stroke="none"/><path d="M${cx + R * 0.62} ${cy}A${R * 0.62} ${R * 0.62} 0 1 0 ${cx} ${cy - R * 0.62}m-1 -6l6 6l-7 4" fill="none" stroke="#7a5a2a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>`
+      return s
+    }
     if (k === 'rampe') {
       let s = `<rect x="1" y="1" width="${dw - 2}" height="${dh - 2}" rx="4" fill="${d.color}" ${st}/>`
       const n = Math.round((long ? dw : dh) / 9)
