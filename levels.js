@@ -642,6 +642,8 @@
     fs.readdirSync(__dirname).filter((f) => /^levels-extra-.*\.js$/.test(f)).sort().forEach((f) => require('./' + f)(A, H).forEach((l) => LEVELS.push(l)))
   } else (globalThis.ArchiExtra || []).forEach((make) => make(A, H).forEach((l) => LEVELS.push(l)))
   LEVELS.sort((p, q) => p.id - q.id)
+  // Tous les niveaux qui proposent l'escalier droit proposent aussi l'escalier en colimaçon
+  LEVELS.forEach((lv) => { if (lv.palette && lv.palette.includes('escalier') && !lv.palette.includes('escalier_col')) lv.palette.push('escalier_col') })
 
   // Apparence des clients (portraits dessinés par portraits.js) et réglages de chrono
 
