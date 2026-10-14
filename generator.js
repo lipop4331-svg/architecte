@@ -1179,6 +1179,7 @@
 
     const palette = [...new Set(items.map((i) => i.t))]
     if (p.floors === 2 && !palette.includes('escalier')) palette.push('escalier')
+    if (palette.includes('escalier') && !palette.includes('escalier_col')) palette.push('escalier_col')
     const req = crit.length + (twistObj ? twistObj.criteria.length : 0)
     const level = {
       id: `g-${seed}-${d}`, title, w: m.W, h: m.H, road: m.road, floors: p.floors, budget: B1, par: Math.max(3, muts.length + (p.floors === 2 ? 1 : 0)),
